@@ -1,5 +1,6 @@
 package com.thxforservice.board.controllers;
 
+import com.thxforservice.board.constants.DeleteStatus;
 import com.thxforservice.board.entities.Board;
 import com.thxforservice.board.entities.BoardData;
 import com.thxforservice.board.services.BoardDeleteService;
@@ -13,6 +14,8 @@ import com.thxforservice.global.ListData;
 import com.thxforservice.global.Utils;
 import com.thxforservice.global.exceptions.BadRequestException;
 import com.thxforservice.global.rests.JSONData;
+import com.thxforservice.member.MemberUtil;
+import com.thxforservice.member.entities.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -26,6 +29,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Tag(name = "Board", description = "게시글 API")
 @RestController
@@ -38,7 +43,7 @@ public class BoardController {
     private final BoardViewCountService viewCountService;
     private final BoardValidator validator;
     private final Utils utils;
-
+    private final MemberUtil memberUtil;
 
     @Operation(summary = "게시판 설정 조회", method = "GET")
     @ApiResponse(responseCode = "200", description = "게시판 ID(bid)로 설정 조회")
@@ -161,6 +166,19 @@ public class BoardController {
     public JSONData list(@PathVariable("bid") String bid, @ModelAttribute BoardDataSearch search) {
         ListData<BoardData> data = infoService.getList(bid, search);
 
+        return new JSONData(data);
+    }
+
+    @GetMapping("/mylist")
+    public JSONData myList(BoardDataSearch search) {
+        if (memberUtil.isLogin()) {
+            return new JSONData(new ListData<>());
+        }
+
+        Member member = memberUtil.getMember();
+        search.setEmail(List.of(member.getEmail()));
+
+        ListData<BoardData> data = infoService.getList(search, DeleteStatus.UNDELETED);
         return new JSONData(data);
     }
 
