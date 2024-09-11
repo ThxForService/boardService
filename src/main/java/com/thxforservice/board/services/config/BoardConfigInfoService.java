@@ -5,13 +5,15 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.thxforservice.board.controllers.BoardSearch;
 import com.thxforservice.board.controllers.RequestBoardConfig;
 import com.thxforservice.board.entities.Board;
+import com.thxforservice.board.entities.QBoard;
 import com.thxforservice.board.exceptions.BoardNotFoundException;
 import com.thxforservice.board.repositories.BoardRepository;
+import com.thxforservice.file.entities.FileInfo;
+import com.thxforservice.file.services.FileInfoService;
 import com.thxforservice.global.ListData;
 import com.thxforservice.global.Pagination;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import com.thxforservice.board.entities.QBoard;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import static org.springframework.data.domain.Sort.Order.desc;
 @RequiredArgsConstructor
 public class BoardConfigInfoService {
     private final BoardRepository boardRepository;
+    private final FileInfoService fileInfoService;
     private final HttpServletRequest request;
 
     /**
@@ -67,15 +70,11 @@ public class BoardConfigInfoService {
      */
     public void addBoardInfo(Board board) {
         String gid = board.getGid();
-        /*
+
         List<FileInfo> htmlTopImages = fileInfoService.getList(gid, "html_top");
 
         List<FileInfo> htmlBottomImages = fileInfoService.getList(gid, "html_bottom");
 
-        board.setHtmlTopImages(htmlTopImages);
-        board.setHtmlBottomImages(htmlBottomImages);
-
-         */
     }
 
     /**

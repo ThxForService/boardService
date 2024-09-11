@@ -77,6 +77,17 @@ public class BoardAuthService {
                 throw new UnAuthorizedException();
             }
 
+            // QnA 게시판 게시글 Admin, 본인만 열람 가능
+            if (board.getSkin().equals("QnA") && mode.equals("view") && !(viewAuthority == Authority.ADMIN || memberUtil.getMember().getEmail().equals(boardData.getEmail()))) {
+                throw new UnAuthorizedException();
+            }
+
+            // QnA 게시판 댓글 작성은 Admin 만 가능
+            Authority commentAuthority = board.getCommentAccessType();
+            if (board.getSkin().equals("QnA") && !(commentAuthority == Authority.ADMIN)) {
+                throw new UnAuthorizedException();
+            }
+
             // 글쓰기 접근 권한 체크
             Authority writeAuthority = board.getWriteAccessType();
             if (mode.equals("write") && ((writeAuthority == Authority.USER && !memberUtil.isLogin()) || (writeAuthority == Authority.ADMIN && !memberUtil.isAdmin()))) {
