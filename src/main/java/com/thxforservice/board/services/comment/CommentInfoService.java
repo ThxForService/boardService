@@ -2,10 +2,8 @@ package com.thxforservice.board.services.comment;
 
 import com.querydsl.core.BooleanBuilder;
 import com.thxforservice.board.controllers.RequestComment;
-import com.thxforservice.board.entities.Board;
 import com.thxforservice.board.entities.BoardData;
 import com.thxforservice.board.entities.CommentData;
-import com.thxforservice.board.entities.QCommentData;
 import com.thxforservice.board.exceptions.CommentNotFoundException;
 import com.thxforservice.board.repositories.BoardDataRepository;
 import com.thxforservice.board.repositories.CommentDataRepository;
@@ -13,6 +11,7 @@ import com.thxforservice.global.services.SessionService;
 import com.thxforservice.member.MemberUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import com.thxforservice.board.entities.QCommentData;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -130,20 +129,11 @@ public class CommentInfoService {
             return;
         }
 
-
-
         int total = commentDataRepository.getTotal(boardDataSeq);
 
         data.setCommentCount(total);
 
-        Board board = data.getBoard();
-        if (board != null && "QnA".equals(board.getSkin())) {
-            if (total >= 1) {
-                if (!data.getSubject().startsWith("[답변 완료]")) {
-                    data.setSubject("[답변 완료] " + data.getSubject());
-                }
-            }
-        }
         boardDataRepository.flush();
+
     }
 }
