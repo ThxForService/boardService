@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name="BoardAdmin", description = "게시판 관리")
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/board/admin")
 @RequiredArgsConstructor
 public class BoardAdminController {
 
@@ -83,6 +83,7 @@ public class BoardAdminController {
             @Parameter(name="bName", description = "게시판 이름"),
             @Parameter(name="active", description = "게시판 사용중 여부", example = "true")
     })
+    @GetMapping("/list")
     public JSONData list(@ModelAttribute BoardSearch search) {
 
         ListData data = configInfoService.getList(search, true);

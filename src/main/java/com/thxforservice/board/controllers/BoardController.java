@@ -35,6 +35,7 @@ import java.util.List;
 @Tag(name = "Board", description = "게시글 API")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/board")
 public class BoardController {
     private final BoardConfigInfoService configInfoService;
     private final BoardInfoService infoService;
@@ -169,6 +170,17 @@ public class BoardController {
         return new JSONData(data);
     }
 
+    @Operation(summary = "내 게시글 목록", method = "GET")
+    @ApiResponse(responseCode = "200")
+    @Parameters({
+            @Parameter(name="bid", required = true, description = "경로변수, 게시판 ID", example = "notice"),
+            @Parameter(name="page", description = "페이지 번호", example = "1"),
+            @Parameter(name="limit", description = "한페이지당 레코드 갯수", example = "20"),
+            @Parameter(name="sopt", description = "검색옵션<br>ALL: 통합검색<br>SUBJECT: 제목검색<br>CONTENT: 내용검색<br>SUBJECT_CONTENT: 제목+내용 검색<br>NAME: 작성자, 회원명 검색", example = "ALL"),
+            @Parameter(name="skey", description = "검색키워드"),
+            @Parameter(name="bids", description = "게시판 ID 목록"),
+            @Parameter(name="sort", description = "게시판 정렬 조건", example = "viewCount_DESC")
+    })
     @GetMapping("/mylist")
     public JSONData myList(BoardDataSearch search) {
         if (memberUtil.isLogin()) {
