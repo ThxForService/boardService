@@ -1,8 +1,7 @@
-package org.choongang.file.services;
+package com.thxforservice.file.services;
 
 import com.thxforservice.file.constants.FileStatus;
 import com.thxforservice.file.entities.FileInfo;
-import com.thxforservice.file.services.FileInfoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

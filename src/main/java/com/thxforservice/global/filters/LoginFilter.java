@@ -1,11 +1,11 @@
 package com.thxforservice.global.filters;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thxforservice.global.Utils;
 import com.thxforservice.global.rests.JSONData;
 import com.thxforservice.member.MemberInfo;
 import com.thxforservice.member.constants.Authority;
-import com.thxforservice.member.entities.Authorities;
 import com.thxforservice.member.entities.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.GenericFilterBean;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -57,7 +57,6 @@ public class LoginFilter extends GenericFilterBean {
      */
     private void loginProcess(String token) {
 
-
         try {
             String apiUrl = utils.url("/account", "member-service");
             // api서버 주소/account
@@ -73,16 +72,13 @@ public class LoginFilter extends GenericFilterBean {
                 if (data != null && data.isSuccess()) {
                     String json = om.writeValueAsString(data.getData());
                     Member member = om.readValue(json, Member.class);
-                    List<Authorities> tmp = member.getAuthorities();
-                    if (tmp == null || tmp.isEmpty()) {
-                        Authorities authorities = new Authorities();
-                        authorities.setAuthority(Authority.USER);
-                        tmp = List.of(authorities);
+
+                    Authority authority = member.getAuthority();
+                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(authority.name()));
+                    if (authority == Authority.COUNSELOR) {
+                        authorities.add(new SimpleGrantedAuthority(Authority.COUNSELOR.name()));
                     }
 
-                    List<SimpleGrantedAuthority> authorities = tmp.stream()
-                            .map(a -> new SimpleGrantedAuthority(a.getAuthority().name()))
-                            .toList();
 
                     MemberInfo memberInfo = MemberInfo.builder()
                             .email(member.getEmail())
@@ -126,3 +122,4 @@ public class LoginFilter extends GenericFilterBean {
         return null;
     }
 }
+
