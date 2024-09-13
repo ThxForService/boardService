@@ -8,7 +8,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Member {
 
-    private Long seq;
+    private Long memberSeq;
 
     private String gid;
 

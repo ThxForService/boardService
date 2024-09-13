@@ -24,7 +24,7 @@ public class BoardViewCountService {
             return;
         }
 
-        int uid = memberUtil.isLogin() ? memberUtil.getMember().getSeq().intValue() : utils.guestUid();
+        int uid = memberUtil.isLogin() ? memberUtil.getMember().getMemberSeq().intValue() : utils.guestUid();
 
         BoardView boardView = new BoardView(seq, uid);
         viewRepository.saveAndFlush(boardView);
