@@ -23,7 +23,7 @@ public class FileInfoService {
      * @return
      */
     public FileInfo get(Long seq) {
-        ApiRequest result = apiRequest.request("/info/" + seq, "file-service");
+        ApiRequest result = apiRequest.request("/info/" + seq, "fileservice");
 
         if (result.getStatus().is2xxSuccessful() && result.getData().isSuccess()) {
             return result.toObj(FileInfo.class);
@@ -45,7 +45,7 @@ public class FileInfoService {
         if (StringUtils.hasText(location)) url += "&location=" + location;
         if (status != null) url += "&status=" + status.name();
 
-        ApiRequest result = apiRequest.request(url, "file-service");
+        ApiRequest result = apiRequest.request(url, "fileservice");
         if (result.getStatus().is2xxSuccessful() && result.getData().isSuccess()) {
             return result.toList(new TypeReference<>(){});
         }

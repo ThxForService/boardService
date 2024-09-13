@@ -78,7 +78,7 @@ public class BoardAuthService {
             }
 
             // QnA 게시판 게시글 Admin, 본인만 열람 가능
-            if (board.getSkin().equals("QnA") && mode.equals("view") && !(viewAuthority == Authority.ADMIN || (viewAuthority == Authority.COUNSELOR && !memberUtil.isCounselor()) || memberUtil.getMember().getEmail().equals(boardData.getEmail()))) {
+            if (board.getSkin().equals("QnA") && mode.equals("view") && !(viewAuthority == Authority.ADMIN || memberUtil.getMember().getEmail().equals(boardData.getEmail()))) {
                 throw new UnAuthorizedException();
             }
 
