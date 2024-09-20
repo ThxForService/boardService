@@ -34,7 +34,7 @@ public class Board extends BaseMemberEntity {
     private int listOrder; // 진열 가중치
 
     @Column(length=60, nullable = false)
-    private String bName; // 게시판 이름
+    private String bname; // 게시판 이름
 
     private boolean active; // 사용 여부
 
