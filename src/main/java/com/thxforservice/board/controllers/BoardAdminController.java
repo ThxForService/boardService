@@ -103,6 +103,7 @@ public class BoardAdminController {
             boardConfigDeleteService.delete(bid);
             return ResponseEntity.ok().build(); // 성공 시 200 응답
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.notFound().build(); // 게시판이 없으면 404 응답
         }
     }
