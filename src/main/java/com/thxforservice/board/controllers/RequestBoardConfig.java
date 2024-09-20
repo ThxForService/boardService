@@ -19,7 +19,7 @@ public class RequestBoardConfig {
     private String bid; // 게시판 아이디
 
     @NotBlank
-    private String bName; // 게시판 이름
+    private String bname; // 게시판 이름
 
     private boolean active; // 사용 여부
 
