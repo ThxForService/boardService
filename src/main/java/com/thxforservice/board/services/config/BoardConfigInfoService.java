@@ -93,7 +93,7 @@ public class BoardConfigInfoService {
         /* 검색 조건 처리 S */
         String bid = search.getBid();
         List<String> bids = search.getBids();
-        String bName = search.getBName();
+        String bname = search.getBname();
 
         String sopt = search.getSopt();
         sopt = StringUtils.hasText(sopt) ? sopt.trim() : "ALL";
@@ -112,8 +112,8 @@ public class BoardConfigInfoService {
             andBuilder.and(board.active.eq(true));
         }
 
-        if (StringUtils.hasText(bName)) { // 게시판 명
-            andBuilder.and(board.bName.contains(bName.trim()));
+        if (StringUtils.hasText(bname)) { // 게시판 명
+            andBuilder.and(board.bname.contains(bname.trim()));
         }
 
 
@@ -122,13 +122,13 @@ public class BoardConfigInfoService {
             skey = skey.trim();
 
             BooleanExpression cond1 = board.bid.contains(skey);
-            BooleanExpression cond2 = board.bName.contains(skey);
+            BooleanExpression cond2 = board.bname.contains(skey);
 
             if (sopt.equals("bid")) {
                 andBuilder.and(cond1);
-            } else if (sopt.equals("bName")) {
+            } else if (sopt.equals("bname")) {
                 andBuilder.and(cond2);
-            } else { // 통합검색 : bid + bName
+            } else { // 통합검색 : bid + bname
                 BooleanBuilder orBuilder = new BooleanBuilder();
                 orBuilder.or(cond1)
                         .or(cond2);
