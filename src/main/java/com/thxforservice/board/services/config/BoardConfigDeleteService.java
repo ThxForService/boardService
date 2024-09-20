@@ -23,13 +23,11 @@ public class BoardConfigDeleteService {
     public void delete(String bid) {
         Board board = configInfoService.get(bid);
 
-        String gid = board.getGid();
 
         boardRepository.delete(board);
 
         boardRepository.flush();
 
-        //fileDeleteService.delete(gid);
     }
 
 
