@@ -40,7 +40,7 @@ public class BoardAdminController {
             @Parameter(name="gid", required = true, description = "그룹 ID, 게시판 상단, 하단 이미지 관련"),
             @Parameter(name="listOrder", description = "진열 가중치, 수치가 높을 수록 먼저 게시판 노출"),
             @Parameter(name="bid", required = true, description = "게시판 아이디"),
-            @Parameter(name="bName", required = true, description = "게시판 이름"),
+            @Parameter(name="bname", required = true, description = "게시판 이름"),
             @Parameter(name="active", example = "false", description = "사용여부")
     })
     @RequestMapping(method={RequestMethod.POST, RequestMethod.PATCH}, path="/save")
@@ -80,7 +80,7 @@ public class BoardAdminController {
             @Parameter(name="skey", description = "검색키워드"),
             @Parameter(name="bid", description = "게시판 ID"),
             @Parameter(name="bids", description = "게시판 ID 목록"),
-            @Parameter(name="bName", description = "게시판 이름"),
+            @Parameter(name="bname", description = "게시판 이름"),
             @Parameter(name="active", description = "게시판 사용중 여부", example = "true")
     })
     @GetMapping("/list")
