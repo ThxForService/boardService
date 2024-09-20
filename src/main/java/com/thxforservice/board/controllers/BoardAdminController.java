@@ -1,6 +1,7 @@
 package com.thxforservice.board.controllers;
 
 import com.thxforservice.board.entities.Board;
+import com.thxforservice.board.services.config.BoardConfigDeleteService;
 import com.thxforservice.board.services.config.BoardConfigInfoService;
 import com.thxforservice.board.services.config.BoardConfigSaveService;
 import com.thxforservice.board.validators.BoardConfigValidator;
@@ -30,6 +31,7 @@ public class BoardAdminController {
     private final BoardConfigSaveService configSaveService;
     private final BoardConfigInfoService configInfoService;
     private final BoardConfigValidator configValidator;
+    private final BoardConfigDeleteService boardConfigDeleteService;
     private final HttpServletRequest request;
     private final Utils utils;
 
@@ -90,4 +92,19 @@ public class BoardAdminController {
 
         return new JSONData(data);
     }
+
+    @Operation(summary = "게시판 삭제", description = "게시판 아이디(bid) 기준으로 게시판을 삭제합니다.")
+    @ApiResponse(responseCode = "200", description = "게시판 삭제 성공")
+    @ApiResponse(responseCode = "404", description = "존재하지 않는 게시판")
+    @Parameter(name = "bid", required = true, description = "게시판 아이디")
+    @DeleteMapping("/delete/{bid}")
+    public ResponseEntity<Void> deleteBoard(@PathVariable("bid") String bid) {
+        try {
+            boardConfigDeleteService.delete(bid);
+            return ResponseEntity.ok().build(); // 성공 시 200 응답
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build(); // 게시판이 없으면 404 응답
+        }
+    }
+
 }
