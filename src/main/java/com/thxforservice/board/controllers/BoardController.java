@@ -35,7 +35,6 @@ import java.util.List;
 @Tag(name = "Board", description = "게시글 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board")
 public class BoardController {
     private final BoardConfigInfoService configInfoService;
     private final BoardInfoService infoService;
