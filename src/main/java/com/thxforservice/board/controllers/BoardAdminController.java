@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name="BoardAdmin", description = "게시판 관리")
 @RestController
-@RequestMapping("/board/admin")
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class BoardAdminController {
 
