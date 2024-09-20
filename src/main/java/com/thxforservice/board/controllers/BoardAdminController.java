@@ -98,14 +98,8 @@ public class BoardAdminController {
     @ApiResponse(responseCode = "404", description = "존재하지 않는 게시판")
     @Parameter(name = "bid", required = true, description = "게시판 아이디")
     @DeleteMapping("/delete/{bid}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable("bid") String bid) {
-        try {
-            boardConfigDeleteService.delete(bid);
-            return ResponseEntity.ok().build(); // 성공 시 200 응답
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.notFound().build(); // 게시판이 없으면 404 응답
-        }
+    public void  deleteBoard(@PathVariable("bid") String bid) {
+        boardConfigDeleteService.delete(bid);
     }
 
 }
