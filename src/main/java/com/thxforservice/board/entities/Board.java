@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.FileInfo;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -85,18 +84,6 @@ public class Board extends BaseMemberEntity {
     @Enumerated(EnumType.STRING)
     @Column(length=20, nullable = false)
     private Authority commentAccessType = Authority.ALL; // 권한 설정 - 댓글
-
-    @Lob
-    private String htmlTop; // 게시판 상단 HTML
-
-    @Lob
-    private String htmlBottom; // 게시판 하단 HTML
-
-    @Transient
-    private List<FileInfo> htmlTopImages; // 게시판 상단 Top 이미지
-
-    @Transient
-    private List<FileInfo> htmlBottomImages; // 게시판 하단 Bottom 이미지
 
     /**
      * 분류 List 형태로 변환

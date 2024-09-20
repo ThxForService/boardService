@@ -50,8 +50,6 @@ public class BoardConfigSaveService {
         board.setReplyAccessType(Authority.valueOf(form.getReplyAccessType()));
         board.setCommentAccessType(Authority.valueOf(form.getCommentAccessType()));
 
-        board.setHtmlTop(form.getHtmlTop());
-        board.setHtmlBottom(form.getHtmlBottom());
 
         board.setListOrder(form.getListOrder());
 

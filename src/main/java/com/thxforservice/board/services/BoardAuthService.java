@@ -67,19 +67,30 @@ public class BoardAuthService {
 
             // 게시글 목록 접근 권한 체크
             Authority authority = board.getListAccessType();
-            if (mode.equals("list") && ((authority == Authority.USER && !memberUtil.isLogin()) || (authority == Authority.ADMIN && !memberUtil.isAdmin()))) {
+            if (mode.equals("list") && ((authority == Authority.STUDENT && !memberUtil.isLogin())  || (authority == Authority.COUNSELOR && !memberUtil.isCounselor()) || (authority == Authority.ADMIN && !memberUtil.isAdmin()))) {
                 throw new UnAuthorizedException();
             }
 
             // 게시글 보기 접근 권한 체크
             Authority viewAuthority = board.getViewAccessType();
-            if (mode.equals("view") && ((viewAuthority == Authority.USER && !memberUtil.isLogin()) || (viewAuthority == Authority.ADMIN && !memberUtil.isAdmin()))) {
+            if (mode.equals("view") && ((viewAuthority == Authority.STUDENT && !memberUtil.isLogin())  || (viewAuthority == Authority.COUNSELOR && !memberUtil.isCounselor()) || (viewAuthority == Authority.ADMIN && !memberUtil.isAdmin()))) {
+                throw new UnAuthorizedException();
+            }
+
+            // QnA 게시판 게시글 Admin, 본인만 열람 가능
+            if (board.getSkin().equals("QnA") && mode.equals("view") && !(viewAuthority == Authority.ADMIN || memberUtil.getMember().getEmail().equals(boardData.getEmail()))) {
+                throw new UnAuthorizedException();
+            }
+
+            // QnA 게시판 댓글 작성은 Admin 만 가능
+            Authority commentAuthority = board.getCommentAccessType();
+            if (board.getSkin().equals("QnA") && !(commentAuthority == Authority.ADMIN)) {
                 throw new UnAuthorizedException();
             }
 
             // 글쓰기 접근 권한 체크
             Authority writeAuthority = board.getWriteAccessType();
-            if (mode.equals("write") && ((writeAuthority == Authority.USER && !memberUtil.isLogin()) || (writeAuthority == Authority.ADMIN && !memberUtil.isAdmin()))) {
+            if (mode.equals("write") && ((writeAuthority == Authority.STUDENT && !memberUtil.isLogin()) || (writeAuthority == Authority.COUNSELOR && !memberUtil.isCounselor()) || (writeAuthority == Authority.ADMIN && !memberUtil.isAdmin()))) {
                 throw new UnAuthorizedException();
             }
 

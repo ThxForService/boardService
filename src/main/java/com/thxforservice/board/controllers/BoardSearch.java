@@ -11,5 +11,6 @@ public class BoardSearch extends CommonSearch {
     private List<String> bids;
 
     private String bName;
+
     private boolean active;
 }

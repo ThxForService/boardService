@@ -16,7 +16,7 @@ public class FileDeleteService {
     private final ApiRequest apiRequest;
 
     public FileInfo delete(Long seq) {
-        ApiRequest result = apiRequest.request("/delete/" + seq, "file-service", HttpMethod.DELETE);
+        ApiRequest result = apiRequest.request("/delete/" + seq, "fileservice", HttpMethod.DELETE);
 
         if (result.getStatus().is2xxSuccessful() && result.getData().isSuccess()) {
             return result.toObj(FileInfo.class);
@@ -30,7 +30,7 @@ public class FileDeleteService {
         String url = "/deletes/" + gid;
         if (StringUtils.hasText(location)) url += "&location=" + location;
 
-        ApiRequest result = apiRequest.request(url, "file-service", HttpMethod.DELETE);
+        ApiRequest result = apiRequest.request(url, "fileservice", HttpMethod.DELETE);
 
         if (result.getStatus().is2xxSuccessful() && result.getData().isSuccess()) {
             return result.toList(new TypeReference<>() {});

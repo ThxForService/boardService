@@ -146,6 +146,15 @@ public class BoardInfoService {
             andBuilder.and(orBuilder);
         }
 
+        Long num1 = search.getNum1();
+        if (num1 != null) {
+            andBuilder.and(boardData.num1.eq(num1));
+        }
+
+        List<String> email = search.getEmail();
+        if (email != null && !email.isEmpty()) {
+            andBuilder.and(boardData.email.in(email));
+        }
         /* 검색 처리 E */
 
         /* 정렬 처리 S */
@@ -374,8 +383,10 @@ public class BoardInfoService {
         if (authority == Authority.ALL || memberUtil.isAdmin()) {
             commentable = true;
         }
-
-        if (authority == Authority.USER && memberUtil.isLogin()) {
+        if (authority == Authority.COUNSELOR || memberUtil.isCounselor()) {
+            commentable = true;
+        }
+        if (authority == Authority.STUDENT && memberUtil.isLogin()) {
             commentable = true;
         }
 
@@ -393,11 +404,11 @@ public class BoardInfoService {
 
 
         if (editAuthority == Authority.ALL || boardUserEmail == null ||
-                (editAuthority == Authority.USER && memberUtil.isLogin())) { // 수정 삭제 권한이 ALL인 경우, 비회원인 경우, 회원만 가능한 경우 + 로그인한 경우 수정, 삭제 버튼 클릭시 비회원 검증 하므로 노출
+                (editAuthority == Authority.STUDENT && memberUtil.isLogin()) || editAuthority == Authority.COUNSELOR && memberUtil.isCounselor()) { // 수정 삭제 권한이 ALL인 경우, 비회원인 경우, 회원만 가능한 경우 + 로그인한 경우 수정, 삭제 버튼 클릭시 비회원 검증 하므로 노출
             showEdit = showDelete = true;
         }
 
-        if (listAuthority == Authority.ALL || (listAuthority == Authority.USER && memberUtil.isLogin())) {
+        if (listAuthority == Authority.ALL || (listAuthority == Authority.STUDENT && memberUtil.isLogin()) || (listAuthority == Authority.COUNSELOR && memberUtil.isCounselor()) ) {
             showList = true;
         }
 
