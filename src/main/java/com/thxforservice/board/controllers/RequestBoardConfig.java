@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestBoardConfig {
 
     private String mode = "add";
