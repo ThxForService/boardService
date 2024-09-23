@@ -102,4 +102,5 @@ public class BoardAdminController {
         boardConfigDeleteService.delete(bid);
     }
 
+
 }

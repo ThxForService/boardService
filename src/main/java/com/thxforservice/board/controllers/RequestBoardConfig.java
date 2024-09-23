@@ -1,12 +1,13 @@
 package com.thxforservice.board.controllers;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestBoardConfig {
 
     private String mode = "add";
