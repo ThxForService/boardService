@@ -218,4 +218,28 @@ public class BoardController {
 
         return new JSONData(data);
     }
+
+
+    @Operation(summary = "모든 게시글 목록", method = "GET")
+    @ApiResponse(responseCode = "200")
+    @Parameters({
+            @Parameter(name = "page", description = "페이지 번호", example = "1"),
+            @Parameter(name = "limit", description = "한 페이지당 레코드 갯수", example = "10"), // 기본 10으로 설정
+            @Parameter(name = "sopt", description = "검색옵션<br>ALL: 통합검색<br>SUBJECT: 제목검색<br>CONTENT: 내용검색<br>SUBJECT_CONTENT: 제목+내용 검색<br>NAME: 작성자, 회원명 검색", example = "ALL"),
+            @Parameter(name = "skey", description = "검색키워드"),
+            @Parameter(name = "sort", description = "정렬 조건", example = "viewCount_DESC")
+    })
+    @GetMapping("/posts")
+    public JSONData listAllPosts(
+            @RequestParam(value = "page", defaultValue = "1") int page, // 기본값 1
+            @RequestParam(value = "limit", defaultValue = "10") int limit, // 기본값 10
+            @ModelAttribute BoardDataSearch search) {
+
+        search.setPage(page);
+        search.setLimit(limit); // limit은 기본적으로 10으로 설정됨
+
+        ListData<BoardData> data = infoService.getList(search, DeleteStatus.ALL);
+        return new JSONData(data);
+    }
+
 }
