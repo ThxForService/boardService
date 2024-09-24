@@ -28,9 +28,6 @@ public class Board extends BaseMemberEntity {
     @Column(length=30)
     private String bid; // 게시판 아이디
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
-    private List<BoardData> boardData;
-
     @Column(length=65, nullable = false)
     private String gid = UUID.randomUUID().toString();
 
