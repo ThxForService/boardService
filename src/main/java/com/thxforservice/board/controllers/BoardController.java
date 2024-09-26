@@ -182,7 +182,7 @@ public class BoardController {
     })
     @GetMapping("/mylist")
     public JSONData myList(BoardDataSearch search) {
-        if (memberUtil.isLogin()) {
+        if (!memberUtil.isLogin()) {
             return new JSONData(new ListData<>());
         }
 
